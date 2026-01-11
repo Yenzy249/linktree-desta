@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DESTA | Linktree</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;}
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:black;
+  overflow:hidden;
+}
+
+/* VIDEO */
+.bg-video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-4;
+}
+
+/* OVERLAY */
+.video-overlay{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,rgba(0,0,0,0.04),rgba(0,0,0,0.22));
+  z-index:-3;
+}
+
+/* PARTICLES */
+.particles{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-2;
+}
+.particle{
+  position:absolute;
+  top:-20px;
+  width:7px;
+  height:7px;
+  background:rgba(190,235,255,0.75);
+  border-radius:50%;
+  box-shadow:0 0 8px rgba(0,200,255,0.9);
+  animation:fall linear infinite;
+}
+@keyframes fall{to{transform:translateY(120vh);}}
+
+/* CONTAINER */
+.container{
+  width:100%;
+  max-width:380px;
+  padding:30px 22px;
+  border-radius:26px;
+  text-align:center;
+  background:rgba(0,40,70,0.07);
+  box-shadow:0 0 22px rgba(0,180,255,.3), inset 0 0 6px rgba(0,180,255,.12);
+  z-index:1;
+}
+
+/* LOGO */
+.logo{
+  width:120px;
+  height:120px;
+  margin:0 auto 14px;
+  border-radius:50%;
+  border:3px solid #00ccff;
+  box-shadow:0 0 26px rgba(0,204,255,.9);
+  overflow:hidden;
+}
+.logo img{width:100%;height:100%;object-fit:cover;}
+
+h1{color:#00ccff;text-shadow:0 0 14px #00ccff;}
+p{color:#e6f9ff;font-size:14px;margin-bottom:18px;}
+
+a.btn{
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin:12px 0;
+  padding:14px;
+  border-radius:18px;
+  text-decoration:none;
+  font-weight:bold;
+  color:#001018;
+  background:#00ccff;
+  box-shadow:0 0 18px rgba(0,180,255,.7);
+  transition:.2s;
+}
+a.btn:active{transform:scale(.96);}
+
+a.btn span.ripple{
+  position:absolute;
+  border-radius:50%;
+  transform:scale(0);
+  animation:ripple .6s linear;
+  background:rgba(255,255,255,.5);
+}
+@keyframes ripple{to{transform:scale(4);opacity:0;}}
+
+/* MUSIC BUTTON */
+.music-control{
+  position:fixed;
+  bottom:18px;
+  right:18px;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:#00ccff;
+  color:#001018;
+  font-size:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 20px rgba(0,180,255,.8);
+  cursor:pointer;
+  z-index:2;
+}
+</style>
+</head>
+
+<body>
+
+<video autoplay muted loop playsinline class="bg-video">
+  <source src="https://files.catbox.moe/ndiy4t.mp4" type="video/mp4">
+</video>
+
+<div class="video-overlay"></div>
+<div class="particles" id="particles"></div>
+
+<div class="container">
+  <div class="logo">
+    <img src="https://files.catbox.moe/11ogyf.jpg">
+  </div>
+
+  <h1>DESTA</h1>
+  <p>OFFCIAL SOSMED DESTA</p>
+
+  <!-- LINK FIX -->
+  <a href="https://wa.me/6283196580304" target="_blank" class="btn">💬 WhatsApp</a>
+  <a href="https://www.tiktok.com/@dezpbm" target="_blank" class="btn">🎵 TikTok</a>
+  <a href="https://instagram.com/despurnwrwnzy" target="_blank" class="btn">📸 Instagram</a>
+</div>
+
+<div class="music-control" id="musicBtn">▶</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://files.catbox.moe/5rsp5m.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* MUSIC */
+const music=document.getElementById('bgMusic');
+const btn=document.getElementById('musicBtn');
+let play=false;
+btn.onclick=()=>{play?(music.pause(),btn.textContent='▶'):(music.play(),btn.textContent='⏸');play=!play;};
+
+/* RIPPLE */
+document.querySelectorAll('.btn').forEach(b=>{
+  b.addEventListener('click',e=>{
+    const r=document.createElement('span');
+    r.className='ripple';
+    const d=Math.max(b.clientWidth,b.clientHeight);
+    r.style.width=r.style.height=d+'px';
+    r.style.left=e.clientX-b.getBoundingClientRect().left-d/2+'px';
+    r.style.top=e.clientY-b.getBoundingClientRect().top-d/2+'px';
+    b.appendChild(r);
+    setTimeout(()=>r.remove(),600);
+  });
+});
+
+/* PARTICLES */
+const pWrap=document.getElementById('particles');
+for(let i=0;i<70;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.left=Math.random()*100+'vw';
+  p.style.animationDuration=(5+Math.random()*6)+'s';
+  p.style.opacity=0.4+Math.random()*0.6;
+  p.style.transform=`scale(${0.8+Math.random()*0.7})`;
+  pWrap.appendChild(p);
+}
+</script>
+
+</body>
+  </html>
